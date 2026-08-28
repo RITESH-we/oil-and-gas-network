@@ -2,7 +2,7 @@
 
 
 
-**## Project Overview**
+## Project Overview**
 
 **This repository contains the design, network topology, and configuration scripts for a resilient five-zone network architecture tailored for oil and gas industrial environments. Designed to protect critical Industrial Control Systems (ICS) and Operational Technology (OT), the architecture isolates sensitive zones while enabling central oversight through a Secure Operations (Secure Ops) center.**
 
