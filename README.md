@@ -52,5 +52,5 @@
 
 &#x20;  **```bash**
 
-&#x20;  **git clone \[https://github.com/Ritesh-we/oil-and-gas-network.git](https://github.com/RITESH-we/oil-and-gas-network.git)**
+&#x20;  **git clone \[[https://github.com/Ritesh-we/oil-and-gas-network.git](https://github.com/RITESH-we/oil-and-gas-network/tree/main)]**
 
