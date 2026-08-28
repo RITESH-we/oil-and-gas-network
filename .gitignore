@@ -1,0 +1,20 @@
+# Cisco Packet Tracer Files & Backups
+*.pkz
+*.pka
+*.bak
+*.tmp
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local Configuration Overrides
+*.local.cfg
+secrets.env
