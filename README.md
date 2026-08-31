@@ -1,32 +1,60 @@
-# Resilient 5-Zone Oil and Gas Network Architecture
+# 🛢️ Resilient 5-Zone Oil and Gas Network Architecture
 
-## Project Overview
+[![Cisco Packet Tracer](https://img.shields.io/badge/Simulator-Cisco%20Packet%20Tracer-005073?logo=cisco&logoColor=white)](https://www.netacad.com/courses/packet-tracer)
+[![Architecture](https://img.shields.io/badge/Design-Purdue%20Model%20ICS/OT-red)](./configs/firewall_acls.cfg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/RITESH-we/oil-and-gas-network/pulls)
 
-This repository contains the design, network topology, and configuration scripts for a resilient five-zone network architecture tailored for oil and gas industrial environments. Designed to protect critical Industrial Control Systems (ICS) and Operational Technology (OT), the architecture isolates sensitive zones while enabling central oversight through a Secure Operations (Secure Ops) center.
+A resilient five-zone network architecture designed for oil and gas industrial environments. Engineered around Purdue Model principles to protect critical Industrial Control Systems (ICS) and Operational Technology (OT), this architecture isolates sensitive zones while enabling central oversight through a Secure Operations (Secure Ops) center.
 
-## Architectural Zones
+---
 
-* **Secure Operations (Secure Ops):** Central nerve center housing SCADA servers, Data Historian, SIEM, NMS, and Jump Server.
-* **Control Zone:** Enforces real-time control of industrial processes via HMIs, Historian Databases, and Industrial Control Servers.
-* **Field Zone:** Geographically distributed site housing PLCs, Sensors (Pressure, Temp, Flow, Gas), and Actuators.
-* **Enterprise Zone:** Corporate IT infrastructure segmented by department (Finance, HR, IT, Marketing).
-* **Demilitarized Zone (DMZ):** External buffer hosting public-facing Web, Email, DNS, FTP, and Reverse Proxy servers.
+## 🏗️ Architecture
 
-## Network Addressing & VLAN Scheme
-
-The prototype implementation utilizes private Class C subnets across five primary VLANs:
-
-| Zone | VLAN ID | Subnet | Gateway IP |
-| :--- | :--- | :--- | :--- |
-| Secure Ops | VLAN 10 | `192.168.10.0/24` | `192.168.10.1` |
-| Control Zone | VLAN 20 | `192.168.20.0/24` | `192.168.20.1` |
-| Enterprise Zone | VLAN 30 | `192.168.30.0/24` | `192.168.30.1` |
-| Field Zone | VLAN 40 | `192.168.40.0/24` | `192.168.40.1` |
-| DMZ | VLAN 50 | `192.168.50.0/24` | `192.168.50.1` |
-
-## Deployment & Simulation Setup
-
-1. Download and install [Cisco Packet Tracer](https://www.netacad.com/courses/packet-tracer).
-2. Clone this repository to your local machine:
-   ```bash
-   git clone [https://github.com/RITESH-we/oil-and-gas-network.git](https://github.com/RITESH-we/oil-and-gas-network.git)
+```text
+                                [ 🌐 EXTERNAL / INTERNET ]
+                                            │
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ 🛡️ DEMILITARIZED ZONE (DMZ) | VLAN 50                                                 │
+│ [ Web Server ]     [ Email Server ]     [ DNS ]     [ FTP ]     [ Reverse Proxy ]      │
+└───────────────────────────────────────┬────────────────────────────────────────────────┘
+                                        │ (Firewall ACLs)
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ 🏢 ENTERPRISE ZONE | VLAN 30                                                           │
+│ [ Finance Dept ]         [ HR Workstations ]         [ IT / Marketing ]                │
+└───────────────────────────────────────┬────────────────────────────────────────────────┘
+                                        │ (Inter-VLAN Routing)
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ ⚙️ SECURE OPERATIONS CENTER (SECURE OPS) | VLAN 10                                     │
+│ [ SCADA Server ]     [ Data Historian ]     [ SIEM ]     [ NMS ]     [ Jump Server ]   │
+└───────────────────────────────────────┬────────────────────────────────────────────────┘
+                                        │ (Enforced Jump Host Protocol)
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ 🎮 CONTROL ZONE | VLAN 20                                                              │
+│ [ HMIs ]             [ Historian Databases ]          [ Industrial Control Servers ]   │
+└───────────────────────────────────────┬────────────────────────────────────────────────┘
+                                        │ (Modbus / OT Protocols)
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ ⚡ FIELD ZONE | VLAN 40                                                                │
+│ [ PLCs ]             [ Sensors (Pressure, Temp, Flow, Gas) ]         [ Actuators ]     │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+oil-and-gas-network/
+│
+├── 📂 configs/
+│   ├── core_switch.cfg       # Core L3 switch VLAN and routing configurations
+│   └── firewall_acls.cfg     # Inter-zone firewall rules & Access Control Lists
+│
+├── 📂 docs/
+│   └── cost_analysis.md      # Financial breakdown and hardware selection report
+│
+├── 📂 simulation/
+│   └── topology.pkt          # Cisco Packet Tracer master simulation file
+│
+├── .gitignore
+├── LICENSE
+└── README.md
